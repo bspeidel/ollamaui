@@ -115,7 +115,8 @@ export class InputBoxComponent implements AfterViewChecked, OnInit {
     //   this.selectedModel = this.DefaultModel;
     // }
 
-    this.selectedModel = this.cookieService.getItem('currentModel') ?? this.defaultModel;
+    this.selectedModel =
+      this.cookieService.getItem('currentModel') ?? this.defaultModel;
 
     // if (this.cookieService.getItem('currentPersona') != undefined) {
     //   this.selectedPersona =
@@ -124,7 +125,8 @@ export class InputBoxComponent implements AfterViewChecked, OnInit {
     //   this.selectedPersona = this.DefaultPersona;
     // }
 
-    this.selectedPersona = this.cookieService.getItem('currentPersona') ?? this.defaultPersona;
+    this.selectedPersona =
+      this.cookieService.getItem('currentPersona') ?? this.defaultPersona;
 
     this.previousSelectedPersona = this.selectedPersona;
     this.currentPersona = this.personas.find(
@@ -197,31 +199,16 @@ export class InputBoxComponent implements AfterViewChecked, OnInit {
     }
   }
 
-  getTimeDate() {
-    let dateOb = new Date();
+  getTimeDate(): string {
+    const dateOb = new Date();
+    const date = ('0' + dateOb.getDate()).slice(-2);
+    const month = ('0' + (dateOb.getMonth() + 1)).slice(-2);
+    const year = dateOb.getFullYear();
+    const hours = ('0' + dateOb.getHours()).slice(-2);
+    const minutes = ('0' + dateOb.getMinutes()).slice(-2);
+    const seconds = ('0' + dateOb.getSeconds()).slice(-2);
 
-    let date = ('0' + dateOb.getDate()).slice(-2);
-    let month = ('0' + (dateOb.getMonth() + 1)).slice(-2);
-    let year = dateOb.getFullYear();
-    let hours = ('0' + dateOb.getHours()).slice(-2);
-    let minutes = ('0' + dateOb.getMinutes()).slice(-2);
-    let seconds = ('0' + dateOb.getSeconds()).slice(-2);
-
-    return (
-      '[' +
-      year +
-      '-' +
-      month +
-      '-' +
-      date +
-      ' ' +
-      hours +
-      ':' +
-      minutes +
-      ':' +
-      seconds +
-      '] '
-    );
+    return `[${year}-${month}-${date} ${hours}:${minutes}:${seconds}]`;
   }
 
   reverseTruncateHistory(size: number): Array<Messages> {
@@ -229,7 +216,6 @@ export class InputBoxComponent implements AfterViewChecked, OnInit {
     let revHist = [...this.chat_history].reverse();
     const buffer = 10;
     const rs: Array<Messages> = [];
-
 
     // Using a 'for' loop
     // for (let i = 0; i < revHist.length; i++) {
