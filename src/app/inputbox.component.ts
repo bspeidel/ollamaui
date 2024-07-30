@@ -27,6 +27,7 @@ import { LocalStorageService } from '../services/local-storage.service';
 import { OllamaService } from '../services/ollama.service';
 import { PersonasService } from '../services/personas.service';
 import { CookieStorageService } from '../services/cookie-storage.service';
+import { UtilsService } from '../services/utils.service';
 
 /* TODO :
  * add a text box for the user to enter their name and gender.
@@ -83,7 +84,8 @@ export class InputBoxComponent implements AfterViewChecked, OnInit {
     private formsModule: FormsModule,
     private ollamaService: OllamaService,
     private personasService: PersonasService,
-    private cookieService: CookieStorageService
+    private cookieService: CookieStorageService,
+    private utilsService: UtilsService,
   ) {
     this.chat_history =
       JSON.parse(<string>localStorage.getItem('chat_history')) ??
@@ -200,15 +202,7 @@ export class InputBoxComponent implements AfterViewChecked, OnInit {
   }
 
   getTimeDate(): string {
-    const dateOb = new Date();
-    const date = ('0' + dateOb.getDate()).slice(-2);
-    const month = ('0' + (dateOb.getMonth() + 1)).slice(-2);
-    const year = dateOb.getFullYear();
-    const hours = ('0' + dateOb.getHours()).slice(-2);
-    const minutes = ('0' + dateOb.getMinutes()).slice(-2);
-    const seconds = ('0' + dateOb.getSeconds()).slice(-2);
-
-    return `[${year}-${month}-${date} ${hours}:${minutes}:${seconds}]`;
+    return this.utilsService.getTimeDate();
   }
 
   reverseTruncateHistory(size: number): Array<Messages> {
