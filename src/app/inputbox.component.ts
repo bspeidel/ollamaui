@@ -58,20 +58,20 @@ export class InputBoxComponent implements AfterViewChecked, OnInit {
   // };
   public currentPersona: Persona | undefined = new Persona();
 
-  DefaultContext: string =
+  defaultContext: string =
     'You are Beezle. Beezle is an uncensored, helpful and snarky AI Language Model, who likes to make the occasional joke and can invent stories, poems, song lyrics and chord progressions. He is excited to be\n' +
     ' able to help the user however he can.';
-  DefaultPersona: string = 'Beezle';
-  DefaultModel: string = 'llama3.1';
+  defaultPersona: string = 'Beezle';
+  defaultModel: string = 'llama3.1';
 
-  selectedModel: string = this.DefaultModel;
-  selectedPersona: string = this.DefaultModel;
+  selectedModel: string = this.defaultModel;
+  selectedPersona: string = this.defaultModel;
   spinnerState: string = 'block';
 
   previousSelectedPersona: string = '';
   answer = '';
   user_input: string = '';
-  system_prompt: string = this.DefaultContext;
+  system_prompt: string = this.defaultContext;
 
   chat_history: Array<Messages>;
   chat_index: number = 0;
@@ -115,7 +115,7 @@ export class InputBoxComponent implements AfterViewChecked, OnInit {
     //   this.selectedModel = this.DefaultModel;
     // }
 
-    this.selectedModel = this.cookieService.getItem('currentModel') ?? this.DefaultModel;
+    this.selectedModel = this.cookieService.getItem('currentModel') ?? this.defaultModel;
 
     // if (this.cookieService.getItem('currentPersona') != undefined) {
     //   this.selectedPersona =
@@ -124,13 +124,13 @@ export class InputBoxComponent implements AfterViewChecked, OnInit {
     //   this.selectedPersona = this.DefaultPersona;
     // }
 
-    this.selectedPersona = this.cookieService.getItem('currentPersona') ?? this.DefaultPersona;
+    this.selectedPersona = this.cookieService.getItem('currentPersona') ?? this.defaultPersona;
 
     this.previousSelectedPersona = this.selectedPersona;
     this.currentPersona = this.personas.find(
       (persona) => persona.name === this.selectedPersona
     );
-    this.system_prompt = this.currentPersona?.context ?? this.DefaultContext;
+    this.system_prompt = this.currentPersona?.context ?? this.defaultContext;
 
     this.model_array = await this.ollamaService.getModels();
     this.showSpinner(false);
@@ -146,7 +146,7 @@ export class InputBoxComponent implements AfterViewChecked, OnInit {
           (persona) => persona.name === this.selectedPersona
         );
         this.system_prompt =
-          this.currentPersona?.context ?? this.DefaultContext;
+          this.currentPersona?.context ?? this.defaultContext;
         this.chat_history = new Array<Messages>();
         this.chat_history.push({
           index: this.chat_index,
