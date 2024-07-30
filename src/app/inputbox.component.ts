@@ -108,19 +108,24 @@ export class InputBoxComponent implements AfterViewChecked, OnInit {
 
   async ngOnInit() {
     this.showSpinner(true);
-    if (this.cookieService.getItem('currentModel') != undefined) {
-      this.selectedModel =
-        this.cookieService.getItem('currentModel') ?? 'llama3.1';
-    } else {
-      this.selectedModel = this.DefaultModel;
-    }
+    // if (this.cookieService.getItem('currentModel')) {
+    //   this.selectedModel =
+    //     this.cookieService.getItem('currentModel') ?? 'llama3.1';
+    // } else {
+    //   this.selectedModel = this.DefaultModel;
+    // }
 
-    if (this.cookieService.getItem('currentPersona') != undefined) {
-      this.selectedPersona =
-        this.cookieService.getItem('currentPersona') ?? 'Beezle';
-    } else {
-      this.selectedPersona = this.DefaultPersona;
-    }
+    this.selectedModel = this.cookieService.getItem('currentModel') ?? this.DefaultModel;
+
+    // if (this.cookieService.getItem('currentPersona') != undefined) {
+    //   this.selectedPersona =
+    //     this.cookieService.getItem('currentPersona') ?? 'Beezle';
+    // } else {
+    //   this.selectedPersona = this.DefaultPersona;
+    // }
+
+    this.selectedPersona = this.cookieService.getItem('currentPersona') ?? this.DefaultPersona;
+
     this.previousSelectedPersona = this.selectedPersona;
     this.currentPersona = this.personas.find(
       (persona) => persona.name === this.selectedPersona
@@ -131,7 +136,7 @@ export class InputBoxComponent implements AfterViewChecked, OnInit {
     this.showSpinner(false);
   }
 
-  async KeyUp(e: KeyboardEvent) {
+  async keyUp(e: KeyboardEvent) {
     // console.log(this.user_input)
     if (e.key === 'Enter' && !e.shiftKey) {
       this.showSpinner(true);
@@ -155,7 +160,7 @@ export class InputBoxComponent implements AfterViewChecked, OnInit {
       this.chat_history.push({
         index: this.chat_index,
         role: 'user',
-        content: this.GetTimeDate() + this.user_input,
+        content: this.getTimeDate() + this.user_input,
         persona: 'user',
       });
       this.localStorage.setItem(
@@ -192,7 +197,7 @@ export class InputBoxComponent implements AfterViewChecked, OnInit {
     }
   }
 
-  GetTimeDate() {
+  getTimeDate() {
     let dateOb = new Date();
 
     let date = ('0' + dateOb.getDate()).slice(-2);
@@ -220,10 +225,11 @@ export class InputBoxComponent implements AfterViewChecked, OnInit {
   }
 
   reverseTruncateHistory(size: number): Array<Messages> {
-    let rs: Array<Messages> = [];
     let cnt: number = 0;
-    const buffer = 10;
     let revHist = [...this.chat_history].reverse();
+    const buffer = 10;
+    const rs: Array<Messages> = [];
+
 
     // Using a 'for' loop
     // for (let i = 0; i < revHist.length; i++) {
@@ -245,8 +251,7 @@ export class InputBoxComponent implements AfterViewChecked, OnInit {
     return rs.reverse();
   }
 
-  ScrollToBottom() {
-    // @ts-ignore
+  scrollToBottom() {
     this.renderer.setProperty(
       this.ScrollContainer?.nativeElement,
       'scrollTop',
@@ -255,7 +260,7 @@ export class InputBoxComponent implements AfterViewChecked, OnInit {
   }
 
   ngAfterViewChecked() {
-    this.ScrollToBottom();
+    this.scrollToBottom();
   }
 
   protected readonly parent = parent;
