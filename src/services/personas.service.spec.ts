@@ -16,7 +16,7 @@ describe('PersonasService', () => {
   });
 
   describe('getAllPersonas', () => {
-    it('should return an empty array when no personas are available', () => {
+    it('should return the default personas when no personas are available', () => {
       // Arrange
       const expectedResult: Array<Persona> = JSON.parse(mockPersonas);
 
