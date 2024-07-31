@@ -12,7 +12,7 @@
   @for ( msg of chat_history; track msg.index) {
     <chat_box [persona]="msg.persona" [role]="msg.role" [content]="msg.content"></chat_box>
   }
-  <img alt="loader" src="../assets/images/loader.gif" id="spinner" class="spinner" [ngStyle]="{'diplay': spinnerState}"/>
+  <img alt="loader" src="../assets/images/loader.gif" id="spinner" class="spinner" [ngStyle]="{'display': spinnerState}"/>
 </div>
 <div class="input_container">
   <input type="text" class="input_box" id="user_input" (keyup)="keyUp($event)" [(ngModel)]="user_input">
